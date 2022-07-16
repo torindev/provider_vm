@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_view_model_v2/foundation/states/base_state.dart';
+import 'package:provider_view_model_v2/foundation/view_model_client.dart';
 import 'package:provider_view_model_v2/ui/list/list_screen_view_model.dart';
 
 class ListScreen extends StatelessWidget {
@@ -20,7 +20,8 @@ class ListScreen extends StatelessWidget {
   }
 }
 
-class _Layout extends StatelessWidget {
+class _Layout extends StatelessWidget
+    with ViewModelClient<ListScreenViewModel> {
   const _Layout({Key? key}) : super(key: key);
 
   @override
@@ -36,17 +37,16 @@ class _Layout extends StatelessWidget {
               return ListTile(
                 leading: IconButton(
                   onPressed: () =>
-                      ListScreenViewModel.of(context).decreaseItemValue(index),
+                      getViewModel(context).decreaseItemValue(index),
                   icon: const Icon(Icons.arrow_back),
                 ),
                 trailing: IconButton(
                   onPressed: () =>
-                      ListScreenViewModel.of(context).increaseItemValue(index),
+                      getViewModel(context).increaseItemValue(index),
                   icon: const Icon(Icons.arrow_forward),
                 ),
                 title: Center(
-                  child: Text(
-                      'Value: ${ListScreenViewModel.of(context).items[index]}'),
+                  child: Text('Value: ${getViewModel(context).items[index]}'),
                 ),
                 subtitle: Center(
                   child: Text('Index: $index'),
@@ -55,10 +55,10 @@ class _Layout extends StatelessWidget {
             },
             selector: (ctx, vm) => vm.itemsState,
             shouldRebuild: (_, __) =>
-                ListScreenViewModel.of(context).updatedIndex == index,
+                getViewModel(context).updatedIndex == index,
           );
         },
-        itemCount: ListScreenViewModel.of(context).items.length,
+        itemCount: getViewModel(context).items.length,
       ),
     );
   }

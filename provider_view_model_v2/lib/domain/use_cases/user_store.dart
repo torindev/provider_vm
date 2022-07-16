@@ -3,6 +3,7 @@ import 'package:provider_view_model_v2/foundation/states/base_state.dart';
 import 'package:provider_view_model_v2/foundation/states/content_state.dart';
 import 'package:provider_view_model_v2/foundation/states/loading_state.dart';
 import 'package:provider_view_model_v2/setup/get_it_deps.dart';
+import 'package:provider_view_model_v2/utils/states_ext.dart';
 
 class UserStore extends ChangeNotifier {
   static UserStore getInstance() => getIt<UserStore>();
@@ -14,6 +15,7 @@ class UserStore extends ChangeNotifier {
   int get value => _value;
 
   Future<void> updateValue() async {
+    if (_valueState.isLoadingState()) return;
     _valueState = LoadingState();
     notifyListeners();
     await Future.delayed(const Duration(seconds: 1));

@@ -17,6 +17,7 @@ class HomeViewModel extends ViewModel {
   BaseState get secondValueState => _secondValueState;
 
   Future<void> updateFirstValue() async {
+    if (_firstValueState.isLoadingState()) return;
     _firstValueState = LoadingState();
     notifyListeners();
     await Future.delayed(const Duration(seconds: 1));
@@ -26,6 +27,7 @@ class HomeViewModel extends ViewModel {
   }
 
   Future<void> updateSecondValue() async {
+    if (_secondValueState.isLoadingState()) return;
     _secondValueState = LoadingState();
     notifyListeners();
     await Future.delayed(const Duration(seconds: 1));
