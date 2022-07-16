@@ -1,73 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:provider_view_model_v2/foundation/states/base_state.dart';
-import 'package:provider_view_model_v2/foundation/states/content_state.dart';
-import 'package:provider_view_model_v2/foundation/states/error_state.dart';
-import 'package:provider_view_model_v2/foundation/states/loading_state.dart';
 import 'package:provider_view_model_v2/foundation/view_model.dart';
 
 class HomeViewModel extends ViewModel {
   static HomeViewModel of(BuildContext context) => ViewModel.get(context);
 
-  BaseState _firstState = ContentState();
-  BaseState get firstState => _firstState;
+  int _firstValue = 0;
+  int get firstValue => _firstValue;
 
-  BaseState _secondState = ContentState();
-  BaseState get secondState => _secondState;
+  int _secondValue = 0;
+  int get secondValue => _secondValue;
 
-  BaseState _thirdState = ContentState();
-  BaseState get thirdState => _thirdState;
+  BaseState _firstValueState = ContentState();
+  BaseState get firstValueState => _firstValueState;
 
-  BaseState _getNextState(BaseState state) {
-    BaseState newState;
-    if (state is ContentState) {
-      newState = const LoadingState();
-    } else if (state is LoadingState) {
-      newState = const ErrorState(error: 'Some error');
-    } else {
-      newState = const ContentState();
-    }
-    return newState;
-  }
+  BaseState _secondValueState = ContentState();
+  BaseState get secondValueState => _secondValueState;
 
-  BaseState _getPrevState(BaseState state) {
-    BaseState newState;
-    if (state is ContentState) {
-      newState = const ErrorState(error: 'Some error');
-    } else if (state is ErrorState) {
-      newState = const LoadingState();
-    } else {
-      newState = const ContentState();
-    }
-    return newState;
-  }
-
-  void moveForwardFirstState() {
-    _firstState = _getNextState(_firstState);
+  Future<void> updateFirstValue() async {
+    _firstValueState = LoadingState();
+    notifyListeners();
+    await Future.delayed(const Duration(seconds: 1));
+    _firstValue++;
+    _firstValueState = ContentState();
     notifyListeners();
   }
 
-  void moveBackwardFirstState() {
-    _firstState = _getPrevState(_firstState);
+  Future<void> updateSecondValue() async {
+    _secondValueState = LoadingState();
     notifyListeners();
-  }
-
-  void moveForwardSecondState() {
-    _secondState = _getNextState(_secondState);
-    notifyListeners();
-  }
-
-  void moveBackwardSecondState() {
-    _secondState = _getPrevState(_secondState);
-    notifyListeners();
-  }
-
-  void moveForwardThirdState() {
-    _thirdState = _getNextState(_thirdState);
-    notifyListeners();
-  }
-
-  void moveBackwardThirdState() {
-    _thirdState = _getPrevState(_thirdState);
+    await Future.delayed(const Duration(seconds: 1));
+    _secondValue++;
+    _secondValueState = ContentState();
     notifyListeners();
   }
 }

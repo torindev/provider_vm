@@ -16,14 +16,14 @@ class ListScreenViewModel extends ViewModel {
   void increaseItemValue(int index) {
     _items[index] = _items[index] + 1;
     _updatedIndex = index;
-    _itemsState = ContentState.update();
+    _itemsState = ContentState();
     notifyListeners();
   }
 
   void decreaseItemValue(int index) {
     _items[index] = _items[index] - 1;
     _updatedIndex = index;
-    _itemsState = ContentState.update();
+    _itemsState = ContentState();
     notifyListeners();
   }
 }

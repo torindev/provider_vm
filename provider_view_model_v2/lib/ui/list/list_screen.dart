@@ -6,6 +6,8 @@ import 'package:provider_view_model_v2/ui/list/list_screen_view_model.dart';
 class ListScreen extends StatelessWidget {
   static const routeName = '/list-screen';
 
+  const ListScreen({Key? key}) : super(key: key);
+
   static Future<Object?> startScreen(BuildContext context) =>
       Navigator.of(context).pushNamed<Object?>(routeName);
 
@@ -13,7 +15,7 @@ class ListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
       create: (ctx) => ListScreenViewModel(),
-      child: _Layout(),
+      child: const _Layout(),
     );
   }
 }
@@ -25,13 +27,12 @@ class _Layout extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('List screen'),
+        title: const Text('List screen'),
       ),
       body: ListView.builder(
         itemBuilder: (ctx, index) {
           return Selector<ListScreenViewModel, BaseState>(
             builder: (ctx, state, _) {
-              print('build item with index $index');
               return ListTile(
                 leading: IconButton(
                   onPressed: () =>

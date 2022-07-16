@@ -5,9 +5,5 @@ import 'package:provider_view_model_v2/setup/multi_provider_app.dart';
 
 void main() {
   setupGetItDependencies();
-  runApp(
-    const MultiProviderApp(
-      child: App(),
-    ),
-  );
+  runApp(const MultiProviderApp(child: App()));
 }

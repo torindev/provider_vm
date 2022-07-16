@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:provider_view_model_v2/app_session.dart';
+import 'package:provider_view_model_v2/domain/use_cases/user_store.dart';
 
 class MultiProviderApp extends StatelessWidget {
   final Widget child;
@@ -15,7 +15,7 @@ class MultiProviderApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider.value(
-          value: AppSession.getInstance(),
+          value: UserStore.getInstance(),
         )
       ],
       child: child,
